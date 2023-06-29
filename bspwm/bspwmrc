@@ -1,0 +1,41 @@
+#!/usr/bin/sh
+
+sxhkd &
+
+bspc monitor -d I II III IV 
+
+bspc config border_width         2
+bspc config window_gap          12
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   false
+bspc config single_monocle 	 true
+bspc config gapless_monocle      false
+
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+
+# Set random wallpaper for actual rice
+feh -z --no-fehbg --bg-fill /home/klinux/Pictures/ --screen 0
+feh -z --no-fehbg --bg-fill /home/klinux/Pictures/ --screen 1
+~/.config/polybar/candy/./launch.sh &
+picom &
+wmname LG3D &
+bspc config border_width 0
+
+
+#bspc config top_padding 6  # Ajusta el valor según la altura de tu Polybar
+
+my_laptop_external_monitor=$(xrandr --query | grep HDMI | grep "connected" | grep -v "disconnected" | awk '{print $1}')
+if [[ $my_laptop_external_monitor ]]; then
+    xrandr --output eDP-1 --primary --mode 1920x1080 --rotate normal --output $my_laptop_external_monitor --mode 1366x768 --rotate normal --right-of eDP-1
+fi
+
+bspc config focus_follows_pointer         true
+bspc config pointer_follows_focus         false
+
+
