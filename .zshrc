@@ -57,10 +57,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 if [ -f /usr/share/zsh-sudo/sudo.plugin.zsh ]; then
 	source /usr/share/zsh-sudo/sudo.plugin.zsh
 fi
-export PATH="/home/klinux/src/john/run:$PATH"
-alias john="/home/klinux/src/john/run/john"
 
-
+export PATH="/usr/share/john/run:$PATH"
+alias john="/usr/share/john/run/john"
 
 export PATH="/home/klinux/.local/bin:$PATH"
 # Extract nmap information
@@ -79,5 +78,31 @@ function rmd(){
 	scrub -p dod $1
 	shred -zun 10 -v $1
 }
-
+alias english="/home/klinux/Documents/test.sh"
+alias crunch="/home/klinux/Documents/scripts/crunch-3.6/./crunch"
+alias arpscan="sudo arp-scan -I enp6s0 --localnet"
 alias showimg="kitty +kitten icat"
+COWPATH="$COWPATH:$HOME/.cowsay/cowfiles"
+
+function delete(){
+
+  echo "Ingrese el nombre de los archivos o el archivo que no desea eliminar (separados por espacios):"
+  read -r files_to_exclude
+
+  # Convertir la entrada del usuario en un arreglo
+  files_array=($files_to_exclude)
+
+  # Construir la parte del comando find que excluye los archivos
+  exclude_cmd=()
+  for file in "${files_array[@]}"
+  do
+    exclude_cmd+=('!' '-name' "$file" '-a')
+  done
+
+  # Ejecutar el comando find
+  find . -type f "${exclude_cmd[@]}" -delete
+
+  echo "Los archivos se han eliminado excepto los archivos especificados."
+
+
+}
